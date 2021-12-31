@@ -15,3 +15,10 @@ let getUserRepos = function(user) {
 getUserRepos("Twitter"); 
 
 
+let userFormEl = document.querySelector("#user-form");
+let nameInputEl = document.querySelector("#username");
+
+let formSubmitHandler = function(event) {
+    event.preventDefault();
+    console.log(event);
+};
