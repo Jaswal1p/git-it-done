@@ -38,10 +38,28 @@ let formSubmitHandler = function(event) {
 userFormEl.addEventListener("submit", formSubmitHandler);
 
 let displayRepos = function(repos, searchTerm) {
-    //console.log(repos);
-    //console.log(searchTerm);
     repoContainerEl.textContent = "";
     repoSearchTerm.textContent = searchTerm;
+
+   // loop over repos
+   for (let i = 0; i < repos.length; i++) {
+       // format repo name
+       let repoName = repos[i].owner.login + "/" + repos[i].name;
+
+       // create a container for each repo
+       let repoEl = document.createElement("div");
+       repoEl.classList = "list-item flex-row justify-space-between align-center";
+
+       // create a span element to hold repository name
+       let titleEl = document.createElement("span");
+       titleEl.textContent = repoName;
+
+       // append to container
+       repoEl.appendChild(titleEl);
+
+       // append container to the dom
+       repoContainerEl.appendChild(repoEl);
+   } 
 };
 
 
