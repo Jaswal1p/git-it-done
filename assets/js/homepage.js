@@ -1,3 +1,7 @@
+let repoContainerEl = document.querySelector("#repos-container");
+let repoSearchTerm = document.querySelector("#repo-search-term");
+
+
 let getUserRepos = function(user) {
     // format the github api url
     let apiUrl = "https://api.github.com/users/" + user + "/repos";
@@ -34,8 +38,10 @@ let formSubmitHandler = function(event) {
 userFormEl.addEventListener("submit", formSubmitHandler);
 
 let displayRepos = function(repos, searchTerm) {
-    console.log(repos);
-    console.log(searchTerm);
+    //console.log(repos);
+    //console.log(searchTerm);
+    repoContainerEl.textContent = "";
+    repoSearchTerm.textContent = searchTerm;
 };
 
 
