@@ -1,5 +1,28 @@
+let userFormEl = document.querySelector("#user-form");
+let nameInputEl = document.querySelector("#username");
 let repoContainerEl = document.querySelector("#repos-container");
 let repoSearchTerm = document.querySelector("#repo-search-term");
+
+
+let formSubmitHandler = function(event) {
+    //prevents page from refresh
+    event.preventDefault();
+
+    // get value from input element
+    let username = nameInputEl.value.trim();
+
+    if (username) {
+        getUserRepos(username);
+
+        repoContainerEl.textContent = '';
+        nameInputEl.value = "";
+    }
+    else {
+        alert("Please enter a GitHub username");
+    }
+    
+};
+
 
 
 let getUserRepos = function(user) {
@@ -9,13 +32,7 @@ let getUserRepos = function(user) {
     // make a request to the url
     
     fetch(apiUrl).then(function(response) {
-        // check if api returned any repos
-        if (repos.length === 0) {
-        repoContainerEl.textContent = "No repositories found.";
-        return;
-  }
-        
-        if (response.ok) {
+       if (response.ok) {
         response.json().then(function(data) {
             displayRepos(data, user);
            });
@@ -29,32 +46,16 @@ let getUserRepos = function(user) {
         // Notice this `.catch()` getting chained onto the end of the `.then()` method
         alert("Unable to connect to GitHub");
       });
-    
-    
 };
 
-
-let userFormEl = document.querySelector("#user-form");
-let nameInputEl = document.querySelector("#username");
-
-let formSubmitHandler = function(event) {
-    event.preventDefault();
-    // get value from input element
-    let username = nameInputEl.value.trim();
-
-    if (username) {
-        getUserRepos(username);
-        nameInputEl.value = "";
-    }
-    else {
-        alert("Please enter a GitHub username");
-    }
-    console.log(event);
-};
-
-userFormEl.addEventListener("submit", formSubmitHandler);
 
 let displayRepos = function(repos, searchTerm) {
+    // check if api returned any repos
+    if (repos.length === 0) {
+        repoContainerEl.textContent = "No repositories found.";
+        return;
+  }
+
     repoContainerEl.textContent = "";
     repoSearchTerm.textContent = searchTerm;
 
@@ -94,6 +95,4 @@ let displayRepos = function(repos, searchTerm) {
    } 
 };
 
-
-
-// getUserRepos("Twitter"); 
+userFormEl.addEventListener("submit", formSubmitHandler);
